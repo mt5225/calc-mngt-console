@@ -19,3 +19,11 @@ export function fetchHospitalRecord() {
         method: 'GET',
     })
 }
+
+/**
+ * update record
+ */
+
+export function updateRecord(payload) {
+    
+}

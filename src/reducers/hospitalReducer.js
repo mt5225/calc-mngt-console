@@ -1,5 +1,4 @@
 import { modeled } from 'react-redux-form'
-import * as UTIL from '../services/util'
 
 const initialState = {
   hospital: null

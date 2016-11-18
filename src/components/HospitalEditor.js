@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Form, actions, Control } from 'react-redux-form'
 import { Button, FieldGroup, Panel, ListGroupItem, ListGroup, FormControl, Grid, Row, Col } from 'react-bootstrap'
-import * as UTIL from '../services/util'
+import { push } from 'react-router-redux'
+import { saveModifyAction } from '../actions'
 
 class HospitalEditor extends React.Component {
 
@@ -168,7 +169,7 @@ class HospitalEditor extends React.Component {
                                 />
                         </ListGroupItem>
                         <ListGroupItem>
-                            <label> 产科综合评分 &nbsp; 格式：纯数字</label>
+                            <label> 产科综合评分 &nbsp; 格式：纯数字, 无评分填0</label>
                             <Control.text
                                 model="record.hospital.rating"
                                 value={record.hospital.rating}
@@ -242,9 +243,9 @@ class HospitalEditor extends React.Component {
                 </Form>
                 <br />
                 <div style={styles.Btn}>
-                    <Button style={styles.submitBtn}> 返回医院列表</Button>
+                    <Button style={styles.submitBtn} onClick={this.props.BackToList}> 返回医院列表</Button>
                     &nbsp;&nbsp; &nbsp;&nbsp;
-                <Button bsStyle="primary" >保存修改</Button>
+                <Button bsStyle="primary" onClick={this.props.SaveModify}>保存修改</Button>
                 </div>
             </Panel>
         );
@@ -260,6 +261,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch,
+        BackToList: () => {
+            dispatch(push('/list'))
+        },
+        SaveModify: () => {
+            dispatch(saveModifyAction())
+        }
     }
 }
 

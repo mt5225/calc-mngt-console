@@ -69,3 +69,9 @@ export const hospitalItemSelectedAction = (payload) => {
     }
 }
 
+export const saveModifyAction = () => {
+    return (dispatch, getState) => {
+        const data = getState().hospitalModeledReducer.hospital
+        console.log(data)
+    }
+}
