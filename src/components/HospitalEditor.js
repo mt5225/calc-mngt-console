@@ -1,16 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Form, actions, Control } from 'react-redux-form'
-import { Button, FieldGroup, Panel, ListGroupItem, ListGroup, FormControl, Grid, Row, Col } from 'react-bootstrap'
+import { Button, FieldGroup, Panel, ListGroupItem, ListGroup, FormControl, Grid, Row, Col, Modal } from 'react-bootstrap'
 import { push } from 'react-router-redux'
-import { saveModifyAction } from '../actions'
+import { saveModifyAction, dialogAction } from '../actions'
 
 class HospitalEditor extends React.Component {
 
     componentWillMount() {
         this.props.dispatch(actions.load('record', this.props.record))
     }
-
     render() {
         let { record } = this.props
         const styles = {
@@ -25,7 +24,34 @@ class HospitalEditor extends React.Component {
                 width: '100%',
             }
         }
-
+        /**
+         * buttons
+         */
+        const buttons = (
+            <div style={styles.Btn}>
+                <Button style={styles.submitBtn} onClick={this.props.BackToList}> 返回医院列表</Button>
+                &nbsp;&nbsp; &nbsp;&nbsp;
+                <Button bsStyle="primary" onClick={this.props.SaveModify}>保存修改</Button>
+            </div>
+        )
+        /**
+         * Opeeration result dailog
+         */
+        const dailog = (
+            <div>
+                <Modal show={this.props.showOpDialog} onHide={this.props.CloseDialog}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>操作结果</Modal.Title>
+                        <Modal.Body>
+                            <h3>{this.props.ifAPISuccess ? '更新记录成功' : '更新记录失败'}</h3>
+                        </Modal.Body>
+                    </Modal.Header>
+                    <Modal.Footer>
+                        <Button onClick={this.props.CloseDialog}>知道了</Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
+        )
         /**
          * cities
          */
@@ -242,11 +268,8 @@ class HospitalEditor extends React.Component {
                     </ListGroup>
                 </Form>
                 <br />
-                <div style={styles.Btn}>
-                    <Button style={styles.submitBtn} onClick={this.props.BackToList}> 返回医院列表</Button>
-                    &nbsp;&nbsp; &nbsp;&nbsp;
-                <Button bsStyle="primary" onClick={this.props.SaveModify}>保存修改</Button>
-                </div>
+                {buttons}
+                {dailog}
             </Panel>
         );
     }
@@ -255,6 +278,8 @@ class HospitalEditor extends React.Component {
 const mapStateToProps = (state) => {
     return {
         record: state.hospitalModeledReducer,
+        ifAPISuccess: state.mngtReducer.ifAPISuccess,
+        showOpDialog: state.mngtReducer.showOpDialog,
     }
 }
 
@@ -266,6 +291,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         SaveModify: () => {
             dispatch(saveModifyAction())
+        },
+        CloseDialog: () => {
+            dispatch(dialogAction(false))
         }
     }
 }

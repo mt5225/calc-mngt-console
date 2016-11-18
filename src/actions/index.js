@@ -26,6 +26,29 @@ export const fetchRecordSuccess = (data) => {
     }
 }
 
+export const updateRecordSuccess = () => {
+    return {
+        type: 'E_UPDATE_SUCCESS',
+    }
+}
+
+export const updateRecordFailed = (statusText) => {
+    return {
+        type: 'E_UPDATE_FAILED',
+        value: statusText,
+    }
+}
+
+/**
+ * Operation dialog action
+ */
+export const dialogAction = (payload) => {
+      return {
+        type: 'A_UPDATE_OP_STATUS',
+        payload,
+    }
+}
+
 /**
  * fetch hospital records
  */
@@ -71,7 +94,24 @@ export const hospitalItemSelectedAction = (payload) => {
 
 export const saveModifyAction = () => {
     return (dispatch, getState) => {
-        const data = getState().hospitalModeledReducer.hospital
-        console.log(data)
+        const payload = getState().hospitalModeledReducer.hospital
+        dispatch(fetchRecordRequestSent('update hospital record'))
+        api.updateRecord(payload)
+            .then(response => {
+                if (response.status !== 200) {
+                    dispatch(updateRecordFailed(response.statusText))
+                } else {
+                    return response.json()
+                        .then(result => {
+                            dispatch(updateRecordSuccess())
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        })
+                }
+            }).catch(e => {
+                console.log(e);
+            }
+            )
     }
 }
