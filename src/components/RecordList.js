@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { hospitalItemSelectedAction, fetchHospitalRecordAction } from '../actions'
 import { ListGroup, ListGroupItem, Button, Col, Grid, Row, PageHeader } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import { push } from 'react-router-redux'
 
 class RecordList extends Component {
     componentDidMount() {
@@ -34,7 +35,7 @@ class RecordList extends Component {
                         </Col>
                         <Col xs={6} md={6}>
                             <LinkContainer to={{ pathname: '/new', query: {} }}>
-                                <Button bsStyle="primary">新建医院记录</Button>
+                                <Button bsStyle="success" onClick={this.props.toNewRecord}>新建医院记录</Button>
                             </LinkContainer>
                         </Col>
 
@@ -67,6 +68,9 @@ const mapDispatchToProps = (dispatch) => {
             }
             dispatch(hospitalItemSelectedAction(payload))
         },
+        toNewRecord: ()=> {
+             dispatch(push('/new'))
+        }
     }
 }
 

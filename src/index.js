@@ -12,6 +12,7 @@ import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import { Router, Route, browserHistory } from 'react-router'
 import RecordList from './components/RecordList'
 import HospitalEditor from './components/HospitalEditor'
+import NewHospital from './components/NewHospital'
 
 
 const logger = createLogger()
@@ -27,6 +28,7 @@ ReactDOM.render(
       <Router history={history}>
         <Route path="/list" component={RecordList} />
         <Route path="/edit" component={HospitalEditor} />
+         <Route path="/new" component={NewHospital} />
         <Route path="*" component={RecordList} />
       </Router>
   </Provider>,

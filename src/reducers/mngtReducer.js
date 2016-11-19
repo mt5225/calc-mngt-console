@@ -44,7 +44,7 @@ const mngtReducer = (state = initialState, action) => {
                     ifAPISuccess: false,
                     showOpDialog: true,
                 }
-            )
+            )   
         case 'A_UPDATE_OP_STATUS':
             return Object.assign(
                 {},

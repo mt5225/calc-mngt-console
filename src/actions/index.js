@@ -39,11 +39,24 @@ export const updateRecordFailed = (statusText) => {
     }
 }
 
+export const deleteRecordFailed = (statusText) => {
+    return {
+        type: 'E_DELETE_FAILED',
+        value: statusText,
+    }
+}
+
+export const deleteRecordSuccess = () => {
+    return {
+        type: 'E_DELETE_SUCCESS',
+    }
+}
+
 /**
  * Operation dialog action
  */
 export const dialogAction = (payload) => {
-      return {
+    return {
         type: 'A_UPDATE_OP_STATUS',
         payload,
     }
@@ -104,6 +117,31 @@ export const saveModifyAction = () => {
                     return response.json()
                         .then(result => {
                             dispatch(updateRecordSuccess())
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        })
+                }
+            }).catch(e => {
+                console.log(e);
+            }
+            )
+    }
+}
+
+export const deleteRecordAction = () => {
+    return (dispatch, getState) => {
+        const UUID = getState().hospitalModeledReducer.hospital.id
+        dispatch(fetchRecordRequestSent('delete record'))
+        api.deleteRecord(UUID)
+            .then(response => {
+                if (response.status !== 200) {
+                    dispatch(deleteRecordFailed(response.statusText))
+                } else {
+                    return response.json()
+                        .then(result => {
+                            dispatch(deleteRecordSuccess())
+                            dispatch(push('/list'))
                         })
                         .catch(e => {
                             console.log(e)

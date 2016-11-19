@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Form, actions, Control } from 'react-redux-form'
 import { Button, FieldGroup, Panel, ListGroupItem, ListGroup, FormControl, Grid, Row, Col, Modal } from 'react-bootstrap'
 import { push } from 'react-router-redux'
-import { saveModifyAction, dialogAction } from '../actions'
+import { saveModifyAction, dialogAction,deleteRecordAction } from '../actions'
 
 class HospitalEditor extends React.Component {
 
@@ -17,7 +17,7 @@ class HospitalEditor extends React.Component {
                 width: '100%',
             },
             Btn: {
-                width: '50%',
+                width: '60%',
                 margin: '0 auto'
             },
             textareainput: {
@@ -32,6 +32,8 @@ class HospitalEditor extends React.Component {
                 <Button style={styles.submitBtn} onClick={this.props.BackToList}> 返回医院列表</Button>
                 &nbsp;&nbsp; &nbsp;&nbsp;
                 <Button bsStyle="primary" onClick={this.props.SaveModify}>保存修改</Button>
+                &nbsp;&nbsp; &nbsp;&nbsp;
+                 <Button bsStyle="danger" onClick={this.props.Delete}>删除记录</Button>
             </div>
         )
         /**
@@ -43,7 +45,7 @@ class HospitalEditor extends React.Component {
                     <Modal.Header closeButton>
                         <Modal.Title>操作结果</Modal.Title>
                         <Modal.Body>
-                            <h3>{this.props.ifAPISuccess ? '更新记录成功' : '更新记录失败'}</h3>
+                            <h3>{this.props.ifAPISuccess ? '操作成功' : '操作失败'}</h3>
                         </Modal.Body>
                     </Modal.Header>
                     <Modal.Footer>
@@ -294,6 +296,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         CloseDialog: () => {
             dispatch(dialogAction(false))
+        },
+        Delete: () => {
+            dispatch(deleteRecordAction())
         }
     }
 }
