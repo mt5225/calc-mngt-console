@@ -153,3 +153,63 @@ export const deleteRecordAction = () => {
             )
     }
 }
+
+/**
+ * new city
+ */
+export const showCityDialogAction = () => {
+    return {
+        type: 'A_CITY_DIALOG_SHOW',
+    }
+}
+
+export const cityDialogCloseAction = () => {
+    return {
+        type: 'A_CITY_DIALOG_CLOSE',
+    }
+}
+
+export const addNewCityToModelAction = (payload) => {
+    return {
+        type: 'A_ADD_NEW_CITY',
+        payload,
+    }
+}
+
+export const cityDialogAddAction = () => {
+    return (dispatch, getState) => {
+        const payload = getState().dialogModeledReducer.city
+        dispatch(addNewCityToModelAction(payload))
+        dispatch(cityDialogCloseAction())
+    }
+}
+
+/**
+ * new doctor
+ */
+export const showDoctorDialogAction = () => {
+    return {
+        type: 'A_DOCTOR_DIALOG_SHOW',
+    }
+}
+
+export const doctorDialogCloseAction = () => {
+    return {
+        type: 'A_DOCTOR_DIALOG_CLOSE',
+    }
+}
+
+export const addNewDoctorToModelAction = (payload) => {
+    return {
+        type: 'A_ADD_NEW_DOCTOR',
+        payload,
+    }
+}
+
+export const doctorDialogAddAction = () => {
+    return (dispatch, getState) => {
+        const payload = getState().dialogModeledReducer.doctor
+        dispatch(addNewDoctorToModelAction(payload))
+        dispatch(doctorDialogCloseAction())
+    }
+}

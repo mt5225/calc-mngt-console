@@ -1,19 +1,28 @@
 import * as UTIL from './util'
 
-const BASE_URL = 'localhost'
-//const BASE_URL = '52.53.191.1'
+const LOCAL = {
+    IP: 'localhost',
+    PORT: '4040'
+}
+const QA = {
+    IP: 'qa.mt5225.com',
+    PORT: '4040'
+}
 
-/**
- * load all the data from backend service
- */
+const PROD = {
+    IP: 'mt5225.com',
+    PORT: '4040'
+}
 
-
+const BACKEND_URL = LOCAL.IP + ':' + LOCAL.PORT
+//const BACKEND_URL = QA.IP + ':' + QA.PORT
+//const BACKEND_URL = PROD.IP + ':' + PROD.PORT
 
 /**
  * fetch booking record for data range
  */
 export function fetchHospitalRecord() {
-    const url = "http://" + BASE_URL + ":4040/api/hospitals"
+    const url = "http://" + BACKEND_URL + "/api/hospitals"
     return fetch(url, {
         headers: new Headers({
             'Content-Type': 'application/json',
@@ -39,13 +48,13 @@ export function updateRecord(payload) {
                 cities: [],
                 doctors: [],
             })
-        url = "http://" + BASE_URL + ":4040/api/hospitals/"
+        url = "http://" + BACKEND_URL + "/api/hospitals/"
     } else {
         payloadClone = Object.assign(
             {},
             payload
         )
-        url = "http://" + BASE_URL + ":4040/api/hospitals/" + payloadClone.id
+        url = "http://" + BACKEND_URL + "/api/hospitals/" + payloadClone.id
     }
     return fetch(url, {
         headers: new Headers({
@@ -60,7 +69,7 @@ export function updateRecord(payload) {
  * delete record
  */
 export function deleteRecord(uuid) {
-    const url = "http://" + BASE_URL + ":4040/api/hospitals/" + uuid
+    const url = "http://" + BACKEND_URL + "/api/hospitals/" + uuid
     return fetch(url, {
         headers: new Headers({
             'Content-Type': 'application/json',

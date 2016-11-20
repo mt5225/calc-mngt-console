@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import { Form, actions, Control } from 'react-redux-form'
 import { Button, FieldGroup, Panel, ListGroupItem, ListGroup, FormControl, Grid, Row, Col, Modal } from 'react-bootstrap'
 import { push } from 'react-router-redux'
-import { saveModifyAction, dialogAction,deleteRecordAction } from '../actions'
+import { saveModifyAction, dialogAction, deleteRecordAction,showCityDialogAction, showDoctorDialogAction } from '../actions'
+import CityDialog from './CityDialog'
+import DoctorDialog from './DoctorDialog'
 
 class HospitalEditor extends React.Component {
 
@@ -17,7 +19,7 @@ class HospitalEditor extends React.Component {
                 width: '100%',
             },
             Btn: {
-                width: '60%',
+                width: '80%',
                 margin: '0 auto'
             },
             textareainput: {
@@ -30,6 +32,10 @@ class HospitalEditor extends React.Component {
         const buttons = (
             <div style={styles.Btn}>
                 <Button style={styles.submitBtn} onClick={this.props.BackToList}> 返回医院列表</Button>
+                &nbsp;&nbsp; &nbsp;&nbsp;
+                <Button bsStyle="success" style={styles.submitBtn} onClick={this.props.addCity}> 新增城市</Button>
+                &nbsp;&nbsp; &nbsp;&nbsp;
+                <Button bsStyle="success" style={styles.submitBtn} onClick={this.props.addDoctor}> 新增医生</Button>
                 &nbsp;&nbsp; &nbsp;&nbsp;
                 <Button bsStyle="primary" onClick={this.props.SaveModify}>保存修改</Button>
                 &nbsp;&nbsp; &nbsp;&nbsp;
@@ -54,6 +60,7 @@ class HospitalEditor extends React.Component {
                 </Modal>
             </div>
         )
+
         /**
          * cities
          */
@@ -272,6 +279,8 @@ class HospitalEditor extends React.Component {
                 <br />
                 {buttons}
                 {dailog}
+                <CityDialog/>
+                <DoctorDialog/>
             </Panel>
         );
     }
@@ -299,6 +308,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         Delete: () => {
             dispatch(deleteRecordAction())
+        },
+        addCity: () => {
+            dispatch(showCityDialogAction())
+        },
+        addDoctor: () => {
+            dispatch(showDoctorDialogAction())
         }
     }
 }
