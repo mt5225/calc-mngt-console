@@ -204,6 +204,18 @@ class HospitalEditor extends React.Component {
                                 />
                         </ListGroupItem>
                         <ListGroupItem>
+                            <label>医院描述 &nbsp;</label>
+                            <Control.text
+                                model="record.hospital.description"
+                                value={record.hospital.description}
+                                component={FormControl}
+                                controlProps={{
+                                    componentClass: 'textarea',
+                                }}
+                                style={styles.textareainput}
+                                />
+                        </ListGroupItem>
+                        <ListGroupItem>
                             <label> 产科综合评分 &nbsp; 格式：纯数字, 无评分填0</label>
                             <Control.text
                                 model="record.hospital.rating"
