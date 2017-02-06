@@ -14,12 +14,12 @@ const PROD = {
     PORT: '4040'
 }
 
-//const BACKEND_URL = LOCAL.IP + ':' + LOCAL.PORT
+const BACKEND_URL = LOCAL.IP + ':' + LOCAL.PORT
 //const BACKEND_URL = QA.IP + ':' + QA.PORT
-const BACKEND_URL = PROD.IP + ':' + PROD.PORT
+//const BACKEND_URL = PROD.IP + ':' + PROD.PORT
 
 /**
- * fetch booking record for data range
+ * fetch hospitals record
  */
 export function fetchHospitalRecord() {
     const url = "http://" + BACKEND_URL + "/api/hospitals"
